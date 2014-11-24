@@ -40,10 +40,19 @@ end
 
 
 def get_first_x_prime_numbers(n)
+  if n <= 0
+    return []
+  end
+  
   # upper bound of Nth prime number is n(ln(n) + ln(ln(n)))
   # http://en.wikipedia.org/wiki/Prime_number_theorem#Approximations_for_the_nth_prime_number
-  top_boundary = n*(Math.log(n) + Math.log(Math.log(n))).to_i
-  
+  map_top_boundary = [0,2,3,5,7,11]
+  if n < 6
+    top_boundary = map_top_boundary[n] + 1
+  else
+    top_boundary = n*(Math.log(n) + Math.log(Math.log(n))).to_i
+  end
+
   puts "top_boundary: #{top_boundary}"
   
   ans = Array.new
@@ -59,6 +68,10 @@ def print_multiplication_table(arr)
   arr.each {|el1|
     arr.each {|el2|
       product = el1*el2
+      if product == 1
+        product = ""
+      end
+      
       digits = product.to_s.size
       print "#{product} " + " "*(assumed_max_digits - digits)
     }
